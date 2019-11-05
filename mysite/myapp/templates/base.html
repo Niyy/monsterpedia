@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+
+
+<html class = "no-js" lang="en" dir="ltr">
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{{ variable }}</title>
+        <link rel="stylesheet" href="{% static "css/foundation.css" %}">
+        {% block css %}
+        {% endblock %}
+    </head>
+            
+        <ul class = "menu align-center">
+            <li><img src = "https://www.professorbeej.com/wp-content/uploads/2011/11/skyrim-logo-dragon-100x100.jpg"></li>
+        </ul>
+
+        {% block content %}
+        {% endblock %}
+
+        
+        <!-- development version, includes helpful console warnings -->
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="{% static "js/myView.js" %}"></script>
+        <!-- Phaser goodies -->
+        <script src="//cdn.jsdelivr.net/npm/phaser@3.20.1/dist/phaser.js"></script>
+        <script src="//cdn.jsdelivr.net/npm/phaser@3.20.1/dist/phaser.min.js"></script>
+        
+        {% block scripts %}
+        {% endblock %}
+        
+    </body>
+
+</html>
