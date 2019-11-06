@@ -8,3 +8,11 @@ def index(request):
     }
 
     return render(request, "index.html")
+
+def monster_maker(request):
+
+    context = {
+        
+    }
+
+    return render(request, "monster_maker.html")
