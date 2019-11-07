@@ -5,7 +5,10 @@
     <div class="grid-x">
         <div class="cell large-2">
         </div>
-        <div class="cell large-8 text-center" id="game">
+        <div class="cell large-8 text-center">
+            <canvas id="glcanvas" width="640" height="480">
+
+            </canvas>
         </div>
         <div class="cell large-2">
         </div>
@@ -14,5 +17,6 @@
 
 
 {% block scripts %}
-    <script src="{% static 'js/phaser/main.js' %}"></script>
+    <script src="{% static 'js/glMatrix/mat4.js' %}"></script>
+    <script src="{% static 'js/webGL/main.js' %}"></script>
 {% endblock %}
