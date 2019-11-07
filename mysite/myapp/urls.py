@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index),
     path('monster_maker/', views.monster_maker),
+    path('hunters_lodge/', views.hunters_lodge),
 ]

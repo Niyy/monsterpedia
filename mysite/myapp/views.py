@@ -16,3 +16,11 @@ def monster_maker(request):
     }
 
     return render(request, "monster_maker.html")
+
+def hunters_lodge(request):
+
+    context = {
+        
+    }
+
+    return render(request, "hunters_lodge.html")
