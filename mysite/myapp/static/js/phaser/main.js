@@ -7,7 +7,8 @@ var config = {
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 200 }
+            gravity: { y: 300 },
+            debug: false
         }
     },
     scene: {
@@ -21,42 +22,50 @@ var game = new Phaser.Game(config);
 
 function preload ()
 {
-    this.load.setBaseURL('http://labs.phaser.io');
-
-    this.load.image('sky', 'assets/sky.png');
-    this.load.image('ground', 'assets/platform.png');
-    this.load.image('star', 'assets/star.png');
-    this.load.image('bomb', 'assets/bomb.png');
+    this.load.image('sky', '/static/media/pretty.jpg');
+    this.load.image('ground', '/static/media/platform.png');
+    this.load.image('bomb', '/static/media/bomb.png');
+    this.load.image('star', '/static/media/star.png')
     this.load.spritesheet('dude', 
-        'assets/dude.png',
+        '/static/media/dude.png',
         { frameWidth: 32, frameHeight: 48 }
     );
 }
 
 function create ()
 {
-    this.add.image(400, 300, 'sky');
+    this.add.image(0, 0, 'sky').setOrigin(0, 0);
+    
+    platforms = this.physics.add.staticGroup();
 
-    var particles = this.add.particles('red');
+    platforms.create(400, 568, 'ground').setScale(2).refreshBody();
 
-    var emitter = particles.createEmitter({
-        speed: 100,
-        scale: { start: 1, end: 0 },
-        blendMode: 'ADD'
+    platforms.create(600, 400, 'ground');
+    platforms.create(50, 250, 'ground');
+    platforms. create(750, 220, 'ground');
+
+    // Player Setup
+    player = this.physics.add.sprite(100, 450, 'dude');
+
+    player.setBounce(0.2);
+    player.setColliderWorldBounds(true);
+
+    this.anims.create({
+        key: 'left',
+        frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3}),
+        frameRate: 10,
+        repeat: -1
     });
 
-    var logo = this.physics.add.image(64, 64, 'bomb');
-    var dragonTwo = this.physics.add.image(64, 64, 'dragon')
-
-    logo.setVelocity(100, 200);
-    logo.setBounce(1, 1);
-    logo.setCollideWorldBounds(true);
-
-    emitter.startFollow(logo);
+    this.anims.create({
+        key: 'left',
+        frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
+        frameRate: 10,
+        repeat: -1
+    });
 }
 
-
-fucntion update()
+function update()
 {
-    console.log("I am updating!");
+
 }
