@@ -8,6 +8,7 @@ main();
 function main() 
 {
   const canvas = document.querySelector('#glcanvas');
+
   const gl = canvas.getContext('webgl');
 
   // If we don't have a GL context, give up now
@@ -17,6 +18,16 @@ function main()
     alert('Unable to initialize WebGL. Your browser or machine may not support it.');
     return;
   }
+
+  // Set up listeners
+
+  canvas.addEventListener('click', function(evt)
+  {
+    var mousePos = getMousePos(canvas, evt)
+    var message = 'Mouse position: ' + mousePos.x + ',' + mousePos.y;
+
+    console.log(message)
+  }, false);
 
   // Vertex shader program
 
@@ -66,6 +77,13 @@ function main()
 
   // Here's where we call the routine that builds all the
   // objects we'll be drawing.
+
+  positions = [
+    0.0, 0.0,   // Top of triangle
+    -1.0, -1.0, // Bottom right
+    1.0, -1.0
+  ];
+
   const buffers = initBuffers(gl);
 
   var then = 0;
@@ -91,7 +109,7 @@ function main()
 // Initialize the buffers we'll need. For this demo, we just
 // have one object -- a simple two-dimensional square.
 //
-function initBuffers(gl) 
+function initBuffers(gl, positions, colors) 
 {
   // Create a buffer for the square's positions.
 
@@ -102,29 +120,11 @@ function initBuffers(gl)
 
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
 
-  // Now create an array of positions for the square.
-
-  const positions = [ // Form x, y,
-     1.0,  1.0,   // Right Upper Corner
-    -1.0,  1.0,   // Left Upper Corner
-     1.0, -1.0,   // Right Lower Corner
-     -1.0, -1.0,    // Left Lower Corner
-  ];
-
   // Now pass the list of positions into WebGL to build the
   // shape. We do this by creating a Float32Array from the
   // JavaScript array, then use it to fill the current buffer.
 
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
-
-  // Now set up the colors for the vertices
-
-  var colors = [
-    1.0,  1.0,  1.0,  1.0,    // white
-    1.0,  0.0,  0.0,  1.0,    // red
-    0.0,  1.0,  0.0,  1.0,    // green
-    0.0,  0.0,  1.0,  1.0,    // blue
-  ];
 
   const colorBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
@@ -177,18 +177,18 @@ function drawScene(gl, programInfo, buffers, deltaTime)
 
   // Now move the drawing position a bit to where we want to
   // start drawing the square.
-
+  
   mat4.translate(modelViewMatrix,     // destination matrix
                  modelViewMatrix,     // matrix to translate
                  [-0.0, 0.0, -6.0]);  // amount to translate
 
   // Rotate the square
-
+  /*
   mat4.rotate(modelViewMatrix,  // destination matrix
     modelViewMatrix,  // matrix to rotate
     squareRotation,   // amount to rotate in radians
     [0, 0.6, 1]);       // axis to rotate around
-
+  */
   // Tell WebGL how to pull out the positions from the position
   // buffer into the vertexPosition attribute
   {
@@ -251,7 +251,7 @@ function drawScene(gl, programInfo, buffers, deltaTime)
   }
 
   // Update the rotation for the next draw
-  squareRotation += deltaTime;
+  // squareRotation += deltaTime;
 }
 
 //
@@ -305,4 +305,14 @@ function loadShader(gl, type, source)
   }
 
   return shader;
+}
+
+
+function getMousePos(canvas, evt) 
+{
+  var rect = canvas.getBoundingClientRect();
+  return {
+    x: evt.clientX - rect.left,
+    y: evt.clientY - rect.top
+  };
 }
