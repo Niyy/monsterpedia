@@ -78,13 +78,28 @@ function main()
   // Here's where we call the routine that builds all the
   // objects we'll be drawing.
 
-  positions = [
-    0.0, 0.0,   // Top of triangle
-    -1.0, -1.0, // Bottom right
+  var positions = [
+    1.0, 1.0,
+    -1.0, 1.0,
+    0.0, 0.0,
+
+    -1.0, -1.0,
+    1.0, 1.0,
+    0.0, 0.0,
+
+    0.0, 0.0,
+    1.0, 1.0,
     1.0, -1.0
   ];
 
-  const buffers = initBuffers(gl);
+  var colors = [
+    1.0,  1.0,  1.0,  1.0,    // white
+    1.0,  0.0,  0.0,  1.0,    // red
+    0.0,  1.0,  0.0,  1.0,    // green
+    0.0,  0.0,  1.0,  1.0,    // blue
+  ];
+
+  const buffers = initBuffers(gl, positions, colors);
 
   var then = 0;
 
@@ -212,7 +227,7 @@ function drawScene(gl, programInfo, buffers, deltaTime)
   // Tell WebGL how to pull out the colors from the color buffer
   // into the vertexColor attribute.
   {
-    const numComponents = 4;
+    const numComponents = 3;
     const type = gl.FLOAT;
     const normalize = false;
     const stride = 0;
@@ -246,8 +261,11 @@ function drawScene(gl, programInfo, buffers, deltaTime)
 
   {
     const offset = 0;
-    const vertexCount = 4;
-    gl.drawArrays(gl.TRIANGLE_STRIP, offset, vertexCount);
+    const vertexCount = 3;
+    gl.drawArrays(gl.TRIANGLES, offset, vertexCount);
+    gl.drawArrays(gl.TRIANGLES, offset+1, vertexCount);
+    //gl.drawArrays(gl.TRIANGLES, offset+2, vertexCount);
+    
   }
 
   // Update the rotation for the next draw
