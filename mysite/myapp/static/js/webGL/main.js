@@ -19,18 +19,36 @@ function main()
     return;
   }
 
+  var new_pos = [
+
+  ];
+
   // Set up listeners
 
   canvas.addEventListener('click', function(evt)
   {
     var mousePos = getMousePos(canvas, evt)
-    var message = 'Mouse position: ' + mousePos.x + ',' + mousePos.y;
+    var half_width = (canvas.width / 2);
+    var half_heigth = canvas.height / 2;
+    var x = (mousePos.x - half_width);
+    var y = (mousePos.y - half_heigth);
+
+    if(x != 0)
+      x = x / half_width;
+    if(y != 0)
+      y = y / half_heigth;
+
+    new_pos.push(-x);
+    new_pos.push(-y);
+
+
+    var message = 'Mouse position: ' + (-x) + ',' + (-y);
 
     console.log(message)
+    console.log("new_pos: " + new_pos);
   }, false);
 
   // Vertex shader program
-
   const vsSource = `
     attribute vec4 aVertexPosition;
     attribute vec4 aVertexColor;
@@ -88,9 +106,10 @@ function main()
     0.0, 0.0,
 
     0.0, 0.0,
-    1.0, 1.0,
+    -1.0, -1.0,
     1.0, -1.0
   ];
+
 
   var colors = [
     1.0,  1.0,  1.0,  1.0,    // white
@@ -99,13 +118,22 @@ function main()
     0.0,  0.0,  1.0,  1.0,    // blue
   ];
 
-  const buffers = initBuffers(gl, positions, colors);
+  var buffers;
 
   var then = 0;
 
   // Draw the scene repeatedly
   function render(now) 
   {
+    if(new_pos.length >= 6)
+    {
+      buffers = initBuffers(gl, new_pos, colors);
+    }
+    else
+    {
+      buffers = initBuffers(gl, positions, colors);
+    }
+
     now *= 0.001;  // convert to seconds
     const deltaTime = now - then;
     then = now;
@@ -117,6 +145,9 @@ function main()
 
   requestAnimationFrame(render);
 }
+
+
+
 
 //
 // initBuffers
@@ -150,6 +181,9 @@ function initBuffers(gl, positions, colors)
     color: colorBuffer,
   };
 }
+
+
+
 
 //
 // Draw the scene.
@@ -195,7 +229,7 @@ function drawScene(gl, programInfo, buffers, deltaTime)
   
   mat4.translate(modelViewMatrix,     // destination matrix
                  modelViewMatrix,     // matrix to translate
-                 [-0.0, 0.0, -6.0]);  // amount to translate
+                 [0.0, 0.0, -6.0]);  // amount to translate
 
   // Rotate the square
   /*
@@ -262,15 +296,20 @@ function drawScene(gl, programInfo, buffers, deltaTime)
   {
     const offset = 0;
     const vertexCount = 3;
-    gl.drawArrays(gl.TRIANGLES, offset, vertexCount);
-    gl.drawArrays(gl.TRIANGLES, offset+1, vertexCount);
-    //gl.drawArrays(gl.TRIANGLES, offset+2, vertexCount);
+
+    for(var next = 0; next * 3 <= new_pos.length)
+    {
+      gl.drawArrays(gl.TRIANGLES, offset, vertexCount);
+    }
     
   }
 
   // Update the rotation for the next draw
   // squareRotation += deltaTime;
 }
+
+
+
 
 //
 // Initialize a shader program, so WebGL knows how to draw our data
@@ -298,6 +337,9 @@ function initShaderProgram(gl, vsSource, fsSource)
   return shaderProgram;
 }
 
+
+
+
 //
 // creates a shader of the given type, uploads the source and
 // compiles it.
@@ -324,6 +366,8 @@ function loadShader(gl, type, source)
 
   return shader;
 }
+
+
 
 
 function getMousePos(canvas, evt) 
