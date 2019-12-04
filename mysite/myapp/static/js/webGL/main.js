@@ -297,8 +297,21 @@ function drawScene(gl, programInfo, buffers, deltaTime, new_pos)
     const offset = 0;
     var vertexCount = 3;
 
-    gl.drawArrays(gl.TRIANGLES, offset, new_pos);
-    console.log("Next: " + next + " Length: " + new_pos.length);
+    for(var i = 0; i < new_pos.length; i++)
+    {
+      if(new_pos.length % 6 * i == 0)
+      {
+        vertexCount += i * 3;
+      }
+    }
+
+    console.log(new_pos.length % 6 == 0)
+
+    if(new_pos.length % 6 == 0 && new_pos.length > 0)
+    {
+      gl.drawArrays(gl.TRIANGLES, offset, vertexCount * 3);
+      console.log(" Length: " + new_pos.length);
+    }
   }
 
   // Update the rotation for the next draw
