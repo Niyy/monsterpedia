@@ -138,7 +138,7 @@ function main()
     const deltaTime = now - then;
     then = now;
 
-    drawScene(gl, programInfo, buffers, deltaTime);
+    drawScene(gl, programInfo, buffers, deltaTime, new_pos);
 
     requestAnimationFrame(render);
   }
@@ -188,7 +188,7 @@ function initBuffers(gl, positions, colors)
 //
 // Draw the scene.
 //
-function drawScene(gl, programInfo, buffers, deltaTime) 
+function drawScene(gl, programInfo, buffers, deltaTime, new_pos) 
 {
   gl.clearColor(0.0, 0.0, 0.0, 1.0);  // Clear to black, fully opaque
   gl.clearDepth(1.0);                 // Clear everything
@@ -295,13 +295,10 @@ function drawScene(gl, programInfo, buffers, deltaTime)
 
   {
     const offset = 0;
-    const vertexCount = 3;
+    var vertexCount = 3;
 
-    for(var next = 0; next * 3 <= new_pos.length)
-    {
-      gl.drawArrays(gl.TRIANGLES, offset, vertexCount);
-    }
-    
+    gl.drawArrays(gl.TRIANGLES, offset, new_pos);
+    console.log("Next: " + next + " Length: " + new_pos.length);
   }
 
   // Update the rotation for the next draw
