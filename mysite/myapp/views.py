@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from django.utils.safestring import mark_safe
+import json
 
 # Create your views here.
 def index(request):
@@ -17,10 +19,8 @@ def monster_maker(request):
 
     return render(request, "monster_maker.html")
 
-def hunters_lodge(request):
+def hunters_lodge(request, room_name):
 
-    context = {
-        
-    }
-
-    return render(request, "hunters_lodge.html")
+    return render(request, 'hunters_lodge.html', {
+        'room_name_json': mark_safe(json.dumps(room_name))
+    })

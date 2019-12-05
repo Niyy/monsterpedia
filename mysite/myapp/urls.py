@@ -21,5 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index),
     path('monster_maker/', views.monster_maker),
-    path('hunters_lodge/', views.hunters_lodge),
+    path('hunters_lodge/<str:room_name>/', views.hunters_lodge, name='room'),
 ]
