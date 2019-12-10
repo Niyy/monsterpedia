@@ -1,3 +1,11 @@
-django
-pytz==2019.2
+channels==2.3.1
+daphne==2.4.0
+Django==2.2.8
+django-phone-field==1.8.0
+oauth==1.0.1
+oauth2client==3.0.0
+Pillow==6.2.0
+protobuf==3.10.0
 sqlparse==0.3.0
+redis
+channels_redis
