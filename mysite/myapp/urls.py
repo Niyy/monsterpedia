@@ -22,4 +22,5 @@ urlpatterns = [
     path('', views.index),
     path('monster_maker/', views.monster_maker),
     path('hunters_lodge/<str:room_name>/', views.hunters_lodge, name='room'),
+    path('monster_maker_two/', views.monster_maker_two),
 ]

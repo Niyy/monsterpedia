@@ -24,3 +24,6 @@ def hunters_lodge(request, room_name):
     return render(request, 'hunters_lodge.html', {
         'room_name_json': mark_safe(json.dumps(room_name))
     })
+
+def monster_maker_two(request):
+    return render(request, "monster_maker_two.html")

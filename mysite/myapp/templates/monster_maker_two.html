@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block css %}
+    <link rel="shortcut icon" href="{% static 'TemplateData/favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'TemplateData/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="grid-container">
+    <div class="grid-x">
+        <div class="cell large-1">
+        </div>
+        <div class="cell small-6 large-6 text-center">
+            <div id="gameContainer" style="width: 960px; height: 600px"></div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+
+{% block scripts %}
+    <script src="{% static 'TemplateData/UnityProgress.js' %}"></script>
+    <script src="{% static 'Build/UnityLoader.js' %}"></script>
+    <script>
+        var gameInstance = UnityLoader.instantiate("gameContainer", "{% static 'Build/Builds.json' %}", {onProgress: UnityProgress});
+    </script>
+{% endblock scripts %}
