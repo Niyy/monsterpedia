@@ -4,18 +4,10 @@ import json
 
 # Create your views here.
 def index(request):
-
-    context = {
-        
-    }
-
+    
     return render(request, "index.html")
 
 def monster_maker(request):
-
-    context = {
-        
-    }
 
     return render(request, "monster_maker.html")
 
@@ -27,3 +19,10 @@ def hunters_lodge(request, room_name):
 
 def monster_maker_two(request):
     return render(request, "monster_maker_two.html")
+
+
+
+
+def save_monster(request):
+    if request.method == "POST":
+        print("Oh my gosh! I got it.")
