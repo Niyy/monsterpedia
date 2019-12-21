@@ -1,3 +1,7 @@
+# Browser that doesn't work
+
+  Brave does not allow for the webGL items to work for some reason, please use firefox or google chrom.
+
 # starter_repo
 Repo to initialize class repositories from, setups initial CI/CD for gitlab as well
 
