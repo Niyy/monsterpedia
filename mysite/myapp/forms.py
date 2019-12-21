@@ -1,4 +1,4 @@
 from django import forms
 
 class MonsterForm(forms.Form):
-    planet_picture = forms.ImageField(label='')
+    monsterName = forms.CharField(max_length=100)
