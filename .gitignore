@@ -238,9 +238,9 @@ Temporary Items
 .apdisk
 
 # Pictures
-*.png
-*.jpeg
-*.svg
+#*.png
+#*.jpeg
+#*.svg
 
 
 # =============== #

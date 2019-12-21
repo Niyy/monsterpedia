@@ -15,13 +15,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index),
+    path('<int:index>/', views.index),
     path('monster_maker/', views.monster_maker),
     path('hunters_lodge/<str:room_name>/', views.hunters_lodge, name='room'),
     path('monster_maker_two/', views.monster_maker_two),
-    path('save_monster', views.save_monster),
-]
+    path('save_monster/', views.save_monster),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # remove for deploymennt
